@@ -1,0 +1,84 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;        -- for addition & counting
+use ieee.numeric_std.all;               -- for type conversions
+
+entity teclado is
+	port (
+		lin : in std_logic_vector (3 downto 0); 
+		col : out std_logic_vector (3 downto 0);
+		num : out std_logic_vector (7 downto 0); 
+		md5_str : out std_logic_vector (31 downto 0); 
+		md5_trigger : out std_logic; 
+		clk , rst: in std_logic
+	) ;
+end teclado;
+
+architecture teclado_arc of teclado is
+	signal count : std_logic_vector (4 downto 0);
+	signal out_col : std_logic_vector (3 downto 0);
+	signal out_num : std_logic_vector (7 downto 0);
+	type arr is array (0 to 3) of std_logic_vector(7 downto 0);
+	signal pass_buffer : arr := (X"00",X"00",X"00",X"00");
+   signal lin_event, md5_trigger_sig  : std_logic := '0';
+begin
+	md5_str(31 downto 24) <= pass_buffer(0);
+	md5_str(23 downto 16) <= pass_buffer(1);
+	md5_str(15 downto 8)  <= pass_buffer(2);
+	md5_str(7 downto 0)   <= pass_buffer(3);
+	
+	process(clk)
+			variable trava : integer := 0;
+	begin
+		if rising_edge(clk) then
+			if rst = '1' or count = "10000" then
+				count <= "00001";
+			elsif md5_trigger_sig = '1' and trava = 0 then
+				count <= "00000";
+				trava := 1;
+			elsif md5_trigger_sig = '0' and trava = 1 then
+				trava := 0;	
+			elsif lin = "0000" then
+				count <= count + count;
+			else
+				count <= count;
+			end if;
+		end if;
+	end process;
+	
+	process(out_num, lin_event)
+		variable j : integer := 0;
+	begin
+		if (lin_event'event and lin_event = '1') then
+			if (out_num /= X"FF" and out_num /= X"FA" and j < 4 )then  
+				pass_buffer(j) <= out_num;
+				md5_trigger_sig  <= '0';
+				j:= j + 1;
+			elsif (out_num = X"FA" and j = 4 and md5_trigger_sig = '0') then
+				md5_trigger_sig  <= '1';
+				j:= 0;
+			end if;
+		end if;
+		
+	end process;
+	
+	md5_trigger <= md5_trigger_sig;
+	col <= out_col;
+	lin_event <= '0' when lin = "0000" else '1';
+	out_col <= count(3 downto 0) when lin = "0000" else 
+			     out_col;
+	num <= out_num;
+	out_num <=  X"31" when count = "1000" and lin = "1000" else
+		    X"32" when count = "0100" and lin = "1000" else
+		    X"33" when count = "0010" and lin = "1000" else
+		    X"34" when count = "1000" and lin = "0100" else
+		    X"35" when count = "0100" and lin = "0100" else
+		    X"36" when count = "0010" and lin = "0100" else
+		    X"37" when count = "1000" and lin = "0010" else
+		    X"38" when count = "0100" and lin = "0010" else
+		    X"39" when count = "0010" and lin = "0010" else
+		    X"30" when count = "0100" and lin = "0001" else
+		    X"FA" when count = "0010" and lin = "0001" else
+		    X"FF";
+		
+end  teclado_arc;

@@ -1,0 +1,59 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;        -- for addition & counting
+use ieee.numeric_std.all;               -- for type conversions
+
+entity esmaga_senha is
+    port (
+        rs, rw ,e : out std_logic;  
+        db        : out std_logic_vector (7 downto 0); 
+        lin       : in  std_logic_vector (3 downto 0); 
+        col       : out std_logic_vector (3 downto 0);
+        clk , rst : in  std_logic
+    ) ;
+end esmaga_senha;
+
+architecture esmaga_senha_arc of esmaga_senha is
+    component teclado is
+        port (
+				lin : in std_logic_vector (3 downto 0); 
+				col : out std_logic_vector (3 downto 0);
+				num : out std_logic_vector (7 downto 0); 
+				md5_str : out std_logic_vector (31 downto 0); 
+				md5_trigger : out std_logic; 
+				clk , rst: in std_logic
+        );
+    end component teclado;
+    component lcd_controler is
+        port (
+            clk       : in  std_logic; 
+            rs, rw ,e : out std_logic;  
+            db        : out std_logic_vector(7 downto 0); 
+            teclado   : in  std_logic_vector(7 downto 0);
+            rst       : in  std_logic
+        );
+    end component lcd_controler;
+    signal num_sig : std_logic_vector (7 downto 0);
+	 signal md5_str_sig : std_logic_vector (31 downto 0); 
+	 signal md5_trigger_sig : std_logic;
+begin
+	tec : teclado port map (
+		lin => lin,
+		col => col,
+		num => num_sig,
+		clk => clk,
+		rst => rst,
+		md5_trigger => md5_trigger_sig,
+		md5_str => md5_str_sig
+	);
+	lcd_c: lcd_controler port map (
+        clk     => clk, 
+        rs      => rs,
+        rw      => rw,
+        e       => e,  
+        db      => db, 
+        teclado => num,
+        rst     => rst
+	);
+
+end  esmaga_senha_arc;

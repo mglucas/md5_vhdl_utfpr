@@ -1,0 +1,233 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'clk'
+Slack : -102.558
+TNS   : -13208.901
+
+Type  : Slow 1200mV 85C Model Setup 'lcd_controler:lcd_c|action'
+Slack : -5.917
+TNS   : -325.380
+
+Type  : Slow 1200mV 85C Model Setup 'teclado:tec|lin_event'
+Slack : -4.547
+TNS   : -216.913
+
+Type  : Slow 1200mV 85C Model Setup 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : -3.207
+TNS   : -37.446
+
+Type  : Slow 1200mV 85C Model Setup 'lin[0]'
+Slack : -0.034
+TNS   : -0.034
+
+Type  : Slow 1200mV 85C Model Hold 'lin[0]'
+Slack : -0.535
+TNS   : -1.530
+
+Type  : Slow 1200mV 85C Model Hold 'clk'
+Slack : -0.145
+TNS   : -0.237
+
+Type  : Slow 1200mV 85C Model Hold 'teclado:tec|lin_event'
+Slack : -0.084
+TNS   : -0.084
+
+Type  : Slow 1200mV 85C Model Hold 'lcd_controler:lcd_c|action'
+Slack : 0.342
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : 0.493
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Recovery 'clk'
+Slack : -6.395
+TNS   : -2230.052
+
+Type  : Slow 1200mV 85C Model Recovery 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : -6.121
+TNS   : -188.156
+
+Type  : Slow 1200mV 85C Model Removal 'clk'
+Slack : 2.388
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Removal 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : 3.196
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -1297.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'lin[0]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'lcd_controler:lcd_c|action'
+Slack : -1.000
+TNS   : -73.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'teclado:tec|lin_event'
+Slack : -1.000
+TNS   : -53.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : -1.000
+TNS   : -32.000
+
+Type  : Slow 1200mV 0C Model Setup 'clk'
+Slack : -91.498
+TNS   : -11708.391
+
+Type  : Slow 1200mV 0C Model Setup 'lcd_controler:lcd_c|action'
+Slack : -5.304
+TNS   : -291.057
+
+Type  : Slow 1200mV 0C Model Setup 'teclado:tec|lin_event'
+Slack : -4.053
+TNS   : -193.566
+
+Type  : Slow 1200mV 0C Model Setup 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : -2.729
+TNS   : -29.200
+
+Type  : Slow 1200mV 0C Model Setup 'lin[0]'
+Slack : 0.076
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'lin[0]'
+Slack : -0.431
+TNS   : -1.220
+
+Type  : Slow 1200mV 0C Model Hold 'clk'
+Slack : -0.133
+TNS   : -0.258
+
+Type  : Slow 1200mV 0C Model Hold 'teclado:tec|lin_event'
+Slack : -0.008
+TNS   : -0.008
+
+Type  : Slow 1200mV 0C Model Hold 'lcd_controler:lcd_c|action'
+Slack : 0.298
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : 0.437
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Recovery 'clk'
+Slack : -5.636
+TNS   : -1963.545
+
+Type  : Slow 1200mV 0C Model Recovery 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : -5.449
+TNS   : -167.491
+
+Type  : Slow 1200mV 0C Model Removal 'clk'
+Slack : 2.173
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Removal 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : 2.952
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -1297.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'lin[0]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'lcd_controler:lcd_c|action'
+Slack : -1.000
+TNS   : -73.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'teclado:tec|lin_event'
+Slack : -1.000
+TNS   : -53.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : -1.000
+TNS   : -32.000
+
+Type  : Fast 1200mV 0C Model Setup 'clk'
+Slack : -58.430
+TNS   : -7050.957
+
+Type  : Fast 1200mV 0C Model Setup 'lcd_controler:lcd_c|action'
+Slack : -2.879
+TNS   : -153.756
+
+Type  : Fast 1200mV 0C Model Setup 'teclado:tec|lin_event'
+Slack : -2.125
+TNS   : -97.761
+
+Type  : Fast 1200mV 0C Model Setup 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : -1.385
+TNS   : -8.703
+
+Type  : Fast 1200mV 0C Model Setup 'lin[0]'
+Slack : 0.376
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'lin[0]'
+Slack : -0.363
+TNS   : -1.124
+
+Type  : Fast 1200mV 0C Model Hold 'clk'
+Slack : -0.210
+TNS   : -0.532
+
+Type  : Fast 1200mV 0C Model Hold 'teclado:tec|lin_event'
+Slack : -0.136
+TNS   : -0.136
+
+Type  : Fast 1200mV 0C Model Hold 'lcd_controler:lcd_c|action'
+Slack : 0.176
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : 0.268
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Recovery 'clk'
+Slack : -3.253
+TNS   : -1116.684
+
+Type  : Fast 1200mV 0C Model Recovery 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : -3.058
+TNS   : -93.716
+
+Type  : Fast 1200mV 0C Model Removal 'clk'
+Slack : 1.311
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Removal 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : 1.769
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -1390.555
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'lin[0]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'lcd_controler:lcd_c|action'
+Slack : -1.000
+TNS   : -73.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'teclado:tec|lin_event'
+Slack : -1.000
+TNS   : -53.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'decoder:dec_c|MD5:b2v_inst|finalizado'
+Slack : -1.000
+TNS   : -32.000
+
+------------------------------------------------------------

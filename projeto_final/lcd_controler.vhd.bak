@@ -1,0 +1,141 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;        -- for addition & counting
+use ieee.numeric_std.all;               -- for type conversions
+
+
+entity lcd_controler is
+generic (fclk: natural := 50_000_000); -- 50MHz , cristal do kit e03
+
+port (
+       clk       : in  std_logic; 
+       rs, rw ,e : out std_logic;  
+       db        : out std_logic_vector(7 downto 0); 
+       teclado   : in  std_logic_vector(7 downto 0);
+       rst       : in  std_logic,
+       time_str  : in  std_logic_vector (31 downto 0) 
+);
+end lcd_controler;
+
+architecture lcd_controler_arq of lcd_controler is
+    type state is (inicio, inicializa_lcd, escreve_senha, espera_pressionar, espera_soltar, escreve_char,clear_processando,escreve_processando,trava);
+    signal pr_state, nx_state: state; 
+    type arr is array (natural range <>) of std_logic_vector(7 downto 0); 
+    
+
+    constant str_senha : arr :=          (X"53",X"65",X"6e",X"68",X"61",X"3a",X"20");
+    constant datas : arr :=              (X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"38",X"01",X"0c",X"06");--,X"50",x"41",x"4e",x"54",x"45",x"43",x"48",x"20",x"53",x"4f",x"4c",x"55",x"54",x"49",x"4f",x"4e",X"53"); --command and data to display                                              
+    constant str_processando : arr :=    (X"50",X"72",X"6f",X"63",X"65",X"73",X"73",X"61",X"6e",X"64",X"6f",X"2e",X"2e",X"2e");
+    signal action, action2, escreve : std_logic := '0';
+    
+
+begin
+        e <= action and escreve;
+        action2 <= not action;
+---—Clock generator (e->500Hz) :---------
+        process (clk)
+        variable count: natural range 0 to fclk/1000; 
+        begin
+            if (clk' event and clk = '1') then 
+                count := count + 1;
+                if (count = fclk/1000) then 
+                 action <= not action; 
+                 count := 0; 
+                end if; 
+            end if; 
+        end process;
+        
+-----Lower section of FSM:---------------
+        process (action) 
+        begin
+            if (action' event and action = '1') then 
+                if (rst = '1') then
+                    pr_state <= inicio; 
+                else
+                    pr_state <= nx_state; 
+                end if; 
+        end if; 
+        end process;
+        
+-----Upper section of FSX:---------------
+        process (pr_state,action2) 
+            variable j : integer := 1;
+        begin
+            if action2'event and action2 = '1' then
+                if pr_state = inicio then
+                    rs<= '0'; rw<= '0'; escreve <= '0';
+                    db <= "00000000";
+                    nx_state <= inicializa_lcd;
+                    j := 0;
+
+                elsif pr_state = inicializa_lcd then 
+                    rs<= '0'; rw<= '0'; escreve <= '1';
+                    db <= datas(j)(7 downto 0);
+                    if (j < 21) then
+                        j := j + 1;
+                        nx_state <= inicializa_lcd;
+                    else  
+                        j := 0;
+                        nx_state <= escreve_senha; 
+                    end if;
+
+                 elsif pr_state = escreve_senha then 
+                    rs<= '1'; rw<= '0'; escreve <= '1';
+                    db <= str_senha(j)(7 downto 0);
+                    if (j < 6) then
+                        j := j + 1;
+                        nx_state <= escreve_senha;
+                    else  
+                        j := 0;
+                        nx_state <= espera_pressionar; 
+                    end if;
+                elsif pr_state = espera_pressionar then
+                    rs<= '1'; rw<= '0'; escreve <= '0';
+                    db <= "10101010";
+                    if teclado = "11111010" and j = 4  then
+                        j := 0;
+                        nx_state <= clear_processando;
+                    elsif teclado = "11111111" or teclado = X"FA" or j = 4 then 
+                        nx_state <= espera_pressionar;
+                    else
+                        nx_state <= escreve_char; 
+                    end if;
+
+                elsif pr_state = escreve_char then
+                    rs<= '1'; rw<= '0'; escreve <= '1';
+                    db <= teclado;                    
+                    nx_state  <= espera_soltar; 
+                    j := j + 1;
+                
+                elsif pr_state = espera_soltar then
+                    rs<= '1'; rw<= '0'; escreve <= '0';
+                    if teclado = "11111111" then 
+                        nx_state <= espera_pressionar ;
+                    else
+                        nx_state <= espera_soltar; 
+                    end if;    
+                elsif pr_state = clear_processando then 
+                    rs<= '0'; rw<= '0'; escreve <= '1';
+                    db <= X"01";
+                    nx_state <= escreve_processando;
+                   
+                elsif pr_state = escreve_processando then 
+                    rs<= '1'; rw<= '0'; escreve <= '1';
+                    db <= str_processando(j)(7 downto 0);
+                    if (j < 13) then
+                        j := j + 1;
+                        nx_state <= escreve_processando;
+                    else  
+                        j := 0;
+                        nx_state <= trava; 
+                    end if;    
+                elsif pr_state = trava then
+                    rs<= '1'; rw<= '0'; escreve <= '0';
+                    db <= "00000000";
+                    nx_state <= trava;
+                end if;
+            end if; 
+        end process;        
+    end lcd_controler_arq;
+
+    
